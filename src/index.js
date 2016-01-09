@@ -5,7 +5,7 @@ import fs from 'fs';
 let meta = {};
 const IGNORED = {};
 
-export default function({Plugin, types: t}) {
+export default function({types: t}) {
   const skipper = {
     enter(node) {
       if (!skip()) {
@@ -20,13 +20,14 @@ export default function({Plugin, types: t}) {
     }
   };
 
-  return new Plugin('aurelia-babel-plugin', {
+  return {
     visitor: {
       Program: {
         enter(node, parent) {
           meta = {};
-          const {filename, moduleRoot, extra: {dts: {packageName, typings, suppressModulePath = false, suppressComments = false, ignoreMembers = /^_.*/}}} = this.state.opts;
-          const moduleId = packageName + '/' + relative(moduleRoot, filename).replace('.js', '');
+          const sourceFileName = this.file.opts.sourceFileName;
+          const {opts: {dts: {packageName, typings, suppressModulePath = false, suppressComments = false, ignoreMembers = /^_.*/}}} = this;
+          const moduleId = packageName + '/' + sourceFileName.replace('.js', '');
           meta.root = packageName;
           meta.moduleId = moduleId;
           meta.moduleExports = [];
@@ -66,7 +67,7 @@ export default function({Plugin, types: t}) {
         meta.interfaces.push(node);
       }
     }
-  });
+  };
 
   function skip() {
     return meta.skipStack.length > 0;

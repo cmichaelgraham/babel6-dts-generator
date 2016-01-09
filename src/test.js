@@ -43,31 +43,23 @@ function run(files, index, errors) {
       let result = transform(content, {
         filename: name,
         filenameRelative: name,
-        modules: 'common',
         sourceMap: false,
         moduleRoot: path.resolve('./src').replace(/\\/g, '/'),
         moduleIds: false,
-        experimental: false,
         comments: false,
         compact: false,
         code: true,
-        stage: 2,
-        loose: 'all',
-        optional: [
-          'es7.decorators',
-          'es7.classProperties'
-        ],
         plugins: [
-          './lib/index'
-        ],
-        extra: {
-          dts: {
-            packageName: 'spec',
-            typings: '',
-            suppressModulePath: true,
-            suppressComments: false
-          }
-        }
+          ['transform-decorators-legacy'],
+          ['./lib/index', {
+              dts: {
+                packageName: 'spec',
+                typings: '',
+                suppressModulePath: true,
+                suppressComments: false
+              }
+            }]
+        ]
       });
 
       let dtsName = file.replace('.src.js', '.d.ts');
