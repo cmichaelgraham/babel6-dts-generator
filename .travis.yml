@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- node
+install:
+- npm install
+script:
+- npm test
+deploy:
+  provider: npm
+  email: alxandr@alxandr.me
+  api_key:
+    secure: KrzERteWzDvwwThQdzPw7ZXDnVhVY8um5A9/lPeJj0GXRvyDcADFq2OeKbhowBzRE+ftAJa96wQdc9718EAU9zo3u7ZGgTrDUMyU1OGYXlXJBM61himtf2Vfjb6FWga3JVvqMpkbWCNOmCRdV8N0kVNV0xFAza/JSZtQLJAbXu8=
+  on:
+    tags: true
+    repo: YoloDev/babel-dts-generator
+    node: node
