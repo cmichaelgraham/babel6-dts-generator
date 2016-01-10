@@ -40,16 +40,17 @@ function run(files, index, errors) {
 
     return read(file).then(content => {
       let name = file.replace('.src.js', '.js');
-      let result = transform(content, {
+      let transformOptions = {
         filename: name,
         filenameRelative: name,
         sourceMap: false,
-        moduleRoot: path.resolve('./src').replace(/\\/g, '/'),
+        moduleRoot: path.resolve('./').replace(/\\/g, '/'),
+        sourceRoot: path.resolve('./').replace(/\\/g, '/'),
         moduleIds: false,
         comments: false,
         compact: false,
         code: true,
-        presets: ['es2015'],
+        presets: ['es2015', 'react'],
         plugins: [
           ['transform-decorators-legacy'],
           ['./lib/index', {
@@ -61,7 +62,9 @@ function run(files, index, errors) {
               }
             }]
         ]
-      });
+      };
+
+      let result = transform(content, transformOptions);
 
       let dtsName = file.replace('.src.js', '.d.ts');
       return read(dtsName).then(actual => {
