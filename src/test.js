@@ -49,6 +49,7 @@ function run(files, index, errors) {
         comments: false,
         compact: false,
         code: true,
+        presets: ['es2015'],
         plugins: [
           ['transform-decorators-legacy'],
           ['./lib/index', {
