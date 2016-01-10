@@ -8,11 +8,10 @@
 
 1. clone repo
 2. `npm install`
-3. `npm test`
+3. `npm run test`
 4. create failing test
 5. modify code
-5. `npm run debug` to run with breakpoints while modifying code
-6. `npm test` (make sure failing test and all other tests are passing)
+6. `npm run test` (make sure failing test and all other tests are passing)
 7. update `package.json` - version number
 7. release
 8. `npm publish`
